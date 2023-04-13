@@ -13,5 +13,7 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         'auth/shibboleth/logout',
+        'auth/saml2/callback',
+        'auth/oidc/logout'
     ];
 }

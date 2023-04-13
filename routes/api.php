@@ -21,7 +21,10 @@ use App\Http\Controllers\api\v1\ServerController;
 use App\Http\Controllers\api\v1\ServerPoolController;
 use App\Http\Controllers\api\v1\SessionController;
 use App\Http\Controllers\api\v1\UserController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Validation\Rule;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +46,18 @@ Route::prefix('v1')->name('api.v1.')->group(function () {
 
     Route::post('login/local', [LoginController::class, 'login'])->name('login.local')->middleware(['enable_if_config:auth.local.enabled']);
     Route::post('login/ldap', [LDAPController::class, 'login'])->name('login.ldap')->middleware(['enable_if_config:ldap.enabled']);
+
+        if (Auth::user() !== null) {
+            Auth::user()->update([
+                'locale' => $validatedData['locale']
+            ]);
+        }
+    })->name('setLocale');
+
+    Route::post('login', [LoginController::class,'login'])->name('login');
+    Route::post('login/ldap', [LDAPController::class,'login'])->name('ldapLogin');
+
+
 
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
     Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.reset')->middleware(['enable_if_config:auth.local.enabled', 'guest', 'throttle:password_reset']);

@@ -21,6 +21,11 @@ abstract class ExternalUser
      * @var array An associative array to store attribute names and their values.
      */
     private array $attributes = [];
+    private User $user;
+
+    public function __get($name): mixed {
+            return $this->properties[$name] ?? null;
+    }
 
     /**
      * Create or find an Eloquent User model based on the external_id attribute.

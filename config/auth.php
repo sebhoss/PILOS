@@ -1,5 +1,6 @@
 <?php
 
+use App\Auth\LDAP\LDAPUserObject;
 use App\Models\User;
 
 return [
