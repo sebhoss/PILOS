@@ -74,6 +74,17 @@ export const routes = [
     }
   },
   {
+    path: '/logout',
+    name: 'logout',
+    component: Logout,
+    meta: { guestsOnly: true },
+    props: route => {
+      return {
+        incompleteWarning: route.params.incompleteWarning
+      };
+    }
+  },
+  {
     path: '/reset_password',
     name: 'password.reset',
     component: PasswordReset,
